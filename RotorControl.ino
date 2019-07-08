@@ -3,17 +3,35 @@
 #include "Global.h"
 
 
-//The setup function is called once at startup of the sketch
+// ----------------------------------------------------------------------------
+// - 	setup - The setup function is called once at startup of the sketch
+// ----------------------------------------------------------------------------
 void setup()
 {
-	SetupEepromConfiguraton();
+
 	SetupDisplay();
-	SetupEncoder();
+
+	// show start message
+	DisplayTextLine(0, "FTM25/6 Controller");
+	DisplayTextLine(1, "V0.0.3    @DB3AC");
+
+	SetupEepromConfiguraton();
+
+	SetupMotorControl();
+
 	SetupNetwork();
+
+	SetupEncoder();
+
+
+	delay(1500);
+	DisplayClear();
 }
 
-// The loop function is called in an endless loop
+
+// ----------------------------------------------------------------------------
+// - 	loop - The loop function is called in an endless loop
+// ----------------------------------------------------------------------------
 void loop()
 {
-//Add your repeated code here
 }
