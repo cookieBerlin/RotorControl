@@ -6,5 +6,6 @@
 #define ENCODER_H_
 
 void SetupEncoder();
+void EncoderUpdate();
 
 #endif /* ENCODER_H_ */

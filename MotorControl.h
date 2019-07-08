@@ -6,5 +6,6 @@
 #define MOTORCONTROL_H_
 
 void SetupMotorControl();
+void MotorControlUpdate();
 
 #endif /* MOTORCONTROL_H_ */

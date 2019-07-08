@@ -14,4 +14,20 @@
 // ----------------------------------------------------------------------------
 void SetupMotorControl()
 {
+	// stop all motor
+	for( int i=0; i<NumberOfRotors; i++)
+	{
+		g_rototData[i].MotorActive = false;
+	}
+
+	// set actual config to GPIO output
+	MotorControlUpdate();
+}
+
+// ----------------------------------------------------------------------------
+// - 	MotorControlUpdate
+// ----------------------------------------------------------------------------
+void MotorControlUpdate()
+{
+
 }
