@@ -47,6 +47,11 @@
 			<location>C:/Users/cookie/Documents/Arduino/libraries/DriverIcMd</location>
 		</link>
 		<link>
+			<name>libraries/EEPROM</name>
+			<type>2</type>
+			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/arduino/hardware/avr/1.6.23/libraries/EEPROM</locationURI>
+		</link>
+		<link>
 			<name>libraries/Ethernet2</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/libraries/Ethernet2/1.0.4</locationURI>

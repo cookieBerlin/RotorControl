@@ -20,8 +20,13 @@
 /// Chip Select for IC-MD Chip, encoder Down
 #define PIN_CHIP_SELECT_IC_MD_DOWN		7
 
+// ID of the settings block
+#define CONFIG_VERSION "MS0"
 
+// Tell it where to store your config data in EEPROM
+#define CONFIG_START 32
 
+// Number of Rotors, unly 2 are supported
 #define NumberOfRotors	2
 
 // ----------------------------------------------------------------------------

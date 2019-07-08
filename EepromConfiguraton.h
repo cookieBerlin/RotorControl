@@ -5,6 +5,7 @@
 #ifndef EEPROMCONFIGURATON_H_
 #define EEPROMCONFIGURATON_H_
 
-void SetupEepromConfiguraton();
+void EepromConfiguratonRead();
+void EepromConfiguratonWrite();
 
 #endif /* EEPROMCONFIGURATON_H_ */
