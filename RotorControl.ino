@@ -51,19 +51,34 @@ void setup()
 	DisplayClear();
 }
 
+// ----------------------------------------------------------------------------------------------------------------------------
+void CentralContol()
+{
+	static unsigned	long previousMillis = 0;        // will store last time
+	unsigned 		long currentMillis = millis();
+
+	// check if next call
+	if ( (currentMillis - previousMillis) <= CONTROL_INTERVALL)
+	{
+		digitalWrite(LED_BUILTIN, HIGH);    // turn the LED off by making the voltage LOW
+		return;
+	}
+	previousMillis = currentMillis;	// save the current time
+
+	digitalWrite(LED_BUILTIN, LOW);   // turn the LED on (HIGH is the voltage level)
+
+
+	// Control commands
+	EncoderUpdate();
+	MotorControlUpdate();
+	DisplayShowStatus();
+}
+
 
 // ----------------------------------------------------------------------------
 // - 	loop - The loop function is called in an endless loop
 // ----------------------------------------------------------------------------
 void loop()
 {
-	digitalWrite(LED_BUILTIN, HIGH);	// turn the LED on by making the voltage High
-
-	EncoderUpdate();
-	MotorControlUpdate();
-	DisplayShowStatus();
-
-	digitalWrite(LED_BUILTIN, LOW);		// turn the LED off by making the voltage LOW
-
-	delay(100);
+	CentralContol();
 }
