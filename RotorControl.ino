@@ -1,8 +1,15 @@
-#include "Arduino.h"
+
+#define EXTERN
+#include "Global.h"
+
+
 //The setup function is called once at startup of the sketch
 void setup()
 {
-// Add your initialization code here
+	SetupEepromConfiguraton();
+	SetupDisplay();
+	SetupEncoder();
+	SetupNetwork();
 }
 
 // The loop function is called in an endless loop
