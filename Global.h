@@ -13,6 +13,15 @@
 #include "Network.h"
 #include "MotorControl.h"
 
+
+/// Chip Select for IC-MD Chip, encoder UP
+#define PIN_CHIP_SELECT_IC_MD_UP		6
+
+/// Chip Select for IC-MD Chip, encoder Down
+#define PIN_CHIP_SELECT_IC_MD_DOWN		7
+
+
+
 #define NumberOfRotors	2
 
 // ----------------------------------------------------------------------------
