@@ -12,7 +12,10 @@
 #include "Encoder.h"
 #include "Network.h"
 #include "MotorControl.h"
+#include "NetworkROTCRL.h"
 
+ // Interval of calling central controller command, in milliseconds
+#define CONTROL_INTERVALL 100
 
 /// Chip Select for IC-MD Chip, encoder UP
 #define PIN_CHIP_SELECT_IC_MD_UP		6
@@ -34,10 +37,12 @@
 // ----------------------------------------------------------------------------
 typedef struct tag_struct_RototData
 {
-	int32_t		Counter;
+	int32_t		CounterInSteps;
+	double		CounterInDegree;
 	bool		CounterReferenced;
 	bool		MotorActive;
 	bool		MotorTurningLeft;
+	double		TargetPositionInDegree;
 } struct_RototData;
 
 typedef struct tag_struct_EepromStore

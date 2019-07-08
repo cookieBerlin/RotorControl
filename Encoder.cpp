@@ -67,7 +67,8 @@ void EncoderUpdate()
 		DriverIcMd::UnionCounterValues counter = driverIcMd[i]->GetCounter();
 
 		// read Data Counter Value
-		g_rototData[i].Counter = counter.Counter0_32Bit.Counter0;
+		g_rototData[i].CounterInSteps = counter.Counter0_32Bit.Counter0;
+		g_rototData[i].CounterInDegree = g_rototData[i].CounterInSteps * g_eepromStore.EncoderCounterScaler[i];
 
 //		Serial.print( "Counter=");
 //		Serial.print( counter.Counter0_32Bit.Counter0, DEC);

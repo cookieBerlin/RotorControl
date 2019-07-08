@@ -33,8 +33,8 @@ uint8_t LcdCharArrowDown[8]  = {
 		0b01110,
 		0b00100};
 
-const int SymbolGrad = 2;
-uint8_t LcdCharGrad[8]  = {
+const int SymbolDegree = 2;
+uint8_t LcdCharDegree[8]  = {
 		0b01110,
 		0b01010,
 		0b01110,
@@ -58,7 +58,7 @@ void SetupDisplay()
 
 	lcd.createChar(SymbolArrowUp, LcdCharArrowUp);
 	lcd.createChar(SymbolArrowDown, LcdCharArrowDown);
-	lcd.createChar(SymbolGrad, LcdCharGrad);
+	lcd.createChar(SymbolDegree, LcdCharDegree);
 }
 
 
@@ -90,7 +90,6 @@ void DisplayTextLine(const int line, const char text[])
 void DisplayShowStatusOfRotor(const int rotorId)
 {
 	const int line = rotorId==0 ? 0 : 2;
-	char buf[21];
 
 	// goto first line
 	lcd.setCursor(0, line);
@@ -98,24 +97,24 @@ void DisplayShowStatusOfRotor(const int rotorId)
 	// show arrow
 	lcd.write(rotorId);
 
-	// show counter
-	sprintf( buf, " %ld count", g_rototData[rotorId].Counter);
-	lcd.print(buf);
-
 	// show degree
-	sprintf( buf, " %d", (int)(g_rototData[rotorId].Counter * g_eepromStore.EncoderCounterScaler[rotorId]));
-	lcd.print(buf);
-	lcd.write(SymbolGrad);	// show Grad
+	lcd.print(" ");
+	lcd.print(g_rototData[rotorId].CounterInDegree, 1);
+	lcd.write(SymbolDegree);	// show Degree
+
+	// show counter
+	lcd.print("(");
+	lcd.print(g_rototData[rotorId].CounterInSteps);
+	lcd.print(")");
+
+	// goto second line
+	lcd.setCursor(0, line+1);
 
 	// show Reference need warning
 	if(!g_rototData[rotorId].CounterReferenced)
 	{
-		lcd.print(" !REF!");
+		lcd.print("!REF! ");
 	}
-
-
-	// goto second line
-	lcd.setCursor(0, line+1);
 
 	// show motor status
 	if( !g_rototData[rotorId].MotorActive)
