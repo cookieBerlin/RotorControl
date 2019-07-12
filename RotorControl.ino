@@ -43,6 +43,7 @@ void setup()
 	SetupMotorControl();
 
 	SetupNetwork();
+	NetworkROTCRL_Init();
 	NetworkCommandline_Init();
 
 	SetupEncoder();
@@ -83,6 +84,7 @@ void CentralContol()
 // ----------------------------------------------------------------------------
 void loop()
 {
+	NetworkROTCRL_handleCommunication();
 	NetworkCommandline_handleCommunication();
 
 	CentralContol();
