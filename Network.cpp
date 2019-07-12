@@ -25,13 +25,26 @@ IPAddress subnet(255, 255, 0, 0);
 // ----------------------------------------------------------------------------
 void SetupNetwork()
 {
-	DisplayTextLine(2, "IP: wait for DHCP...");
+	int resultDhcp = 0;
 
 	// start the Ethernet connection:
-	Serial.println("Trying to get an IP address using DHCP");
-
-	if ( !g_eepromStore.NoDhcp && (Ethernet.begin(mac) == 0))
+	if ( g_eepromStore.UseDhcp )
 	{
+		DisplayTextLine(2, "IP: wait for DHCP...");
+		Serial.println("Trying to get an IP address using DHCP");
+		resultDhcp = Ethernet.begin(mac);
+		if( resultDhcp == 0)
+		{
+			DisplayTextLine(2, "IP: wait for DHCP...FAIL");
+			delay(1500);
+		}
+	}
+
+	if (resultDhcp == 0)
+	{
+		DisplayTextLine(2, "IP: set static...");
+		Serial.println("Configure static IP address");
+
 		// initialize the Ethernet device not using DHCP:
 		Ethernet.begin(mac, ip, myDns, gateway, subnet);
 	}
@@ -40,7 +53,7 @@ void SetupNetwork()
 
 	// shop IP on display
 	char buf[10];
-	sprintf( buf, "IP: %d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+	sprintf( buf, "IP: %d.%d.%d.%d %s", ip[0], ip[1], ip[2], ip[3], ((resultDhcp == 0)? "STAT": "DHCP"));
 	DisplayTextLine(2, buf);
 
 	// shop IP on display

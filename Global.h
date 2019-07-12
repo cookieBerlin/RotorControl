@@ -49,8 +49,8 @@ typedef struct tag_struct_EepromStore
 {
 	// This is for mere detection if they are your settings
 	char					version[4];
-	// disable DHCP on startup
-	bool					NoDhcp;
+	// Activate DHCP on startup
+	bool					UseDhcp;
 	// hold Scaler for Encoder count -> Degree
 	double					EncoderCounterScaler[NumberOfRotors];
 } struct_EepromStore;
