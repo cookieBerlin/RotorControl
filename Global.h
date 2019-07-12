@@ -9,6 +9,7 @@
 
 #include "Display.h"
 #include "EepromConfiguraton.h"
+#include "Gpio.h"
 #include "Encoder.h"
 #include "Network.h"
 #include "NetworkROTCRL.h"
@@ -23,6 +24,22 @@
 
 /// Chip Select for IC-MD Chip, encoder Down
 #define PIN_CHIP_SELECT_IC_MD_DOWN		7
+
+/// Input pin for KEY
+#define PIN_GPIO_KEY					A10
+/// Input pin for Rotor Up
+#define PIN_GPIO_ROTOR_UP				A11
+/// Input pin for Rotor LED
+#define PIN_GPIO_ROTOR_LED				A9
+/// Input pin for Rotor Down
+#define PIN_GPIO_ROTOR_DOWN				A12
+/// Input pin for Control CW
+#define PIN_GPIO_CONTROL_CW				A13
+/// Input pin for Control Led
+#define PIN_GPIO_CONTROL_LED			A8
+/// Input pin for Control CCW
+#define PIN_GPIO_CONTROL_CCW			A14
+
 
 // ID of the settings block
 #define CONFIG_VERSION "RC0"
@@ -56,6 +73,18 @@ typedef struct tag_struct_EepromStore
 	double					EncoderCounterScaler[NumberOfRotors];
 } struct_EepromStore;
 
+typedef struct tag_struct_GpioData
+{
+	bool		Key;
+	bool		RotorUp;
+	bool		RotorLed;
+	bool		RotorDown;
+	bool		ControlCw;
+	bool		ControlLed;
+	bool		ControlCcw;
+} struct_GpioData;
+
+
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 // -	Global Values
@@ -67,6 +96,6 @@ typedef struct tag_struct_EepromStore
 
 EXTERN struct_EepromStore			g_eepromStore;
 EXTERN volatile struct_RototData	g_rototData[NumberOfRotors];
-
+EXTERN volatile struct_GpioData		g_gpio;
 
 #endif /* GLOBAL_H_ */

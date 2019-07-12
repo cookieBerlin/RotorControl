@@ -3,16 +3,6 @@
 #include "Global.h"
 
 // ----------------------------------------------------------------------------
-// - 	SetupGPIO
-// ----------------------------------------------------------------------------
-void SetupGPIO()
-{
-
-	pinMode(LED_BUILTIN, OUTPUT);		// initialize digital pin LED_BUILTIN as an output.
-	digitalWrite(LED_BUILTIN, LOW);		// turn the LED off by making the voltage LOW
-}
-
-// ----------------------------------------------------------------------------
 // - 	SetupSerial
 // ----------------------------------------------------------------------------
 void SetupSerial()
@@ -73,9 +63,11 @@ void CentralContol()
 
 
 	// Control commands
+	GpioReadInput();
 	EncoderUpdate();
 	MotorControlUpdate();
 	DisplayShowStatus();
+	GpioWriteOutput();
 }
 
 
