@@ -43,6 +43,7 @@ void setup()
 	SetupMotorControl();
 
 	SetupNetwork();
+	NetworkCommandline_Init();
 
 	SetupEncoder();
 
@@ -51,7 +52,9 @@ void setup()
 	DisplayClear();
 }
 
-// ----------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// - 	CentralContol
+// ----------------------------------------------------------------------------
 void CentralContol()
 {
 	static unsigned	long previousMillis = 0;        // will store last time
@@ -80,5 +83,7 @@ void CentralContol()
 // ----------------------------------------------------------------------------
 void loop()
 {
+	NetworkCommandline_handleCommunication();
+
 	CentralContol();
 }

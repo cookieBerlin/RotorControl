@@ -7,12 +7,13 @@
 
 #include "Arduino.h"
 
-#include "EepromConfiguraton.h"
 #include "Display.h"
+#include "EepromConfiguraton.h"
 #include "Encoder.h"
 #include "Network.h"
-#include "MotorControl.h"
 #include "NetworkROTCRL.h"
+#include "NetworkCommandline.h"
+#include "MotorControl.h"
 
  // Interval of calling central controller command, in milliseconds
 #define CONTROL_INTERVALL 100
