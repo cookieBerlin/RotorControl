@@ -24,7 +24,7 @@
 #define PIN_CHIP_SELECT_IC_MD_DOWN		7
 
 // ID of the settings block
-#define CONFIG_VERSION "MS0"
+#define CONFIG_VERSION "RC0"
 
 // Tell it where to store your config data in EEPROM
 #define CONFIG_START 32
