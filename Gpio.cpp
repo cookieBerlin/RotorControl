@@ -51,13 +51,42 @@ void GpioReadInput()
 //	Serial.print(g_gpio.ControlCcw);
 //
 //	Serial.println();
+
+	g_gpio.RotorLed = false;
+	g_gpio.ControlLed = false;
+	if(g_gpio.Key)
+	{
+		g_gpio.RotorLed = true;
+		if(g_gpio.RotorUp || g_gpio.RotorDown)
+		{
+			int id = g_gpio.RotorUp ? 1 : 0;
+
+			g_rototData[id].MotorActive = false;
+			if( g_gpio.ControlCw ^ g_gpio.ControlCcw)	// if one key pressed
+			{
+				g_gpio.ControlLed = true;
+				g_rototData[id].MotorActive = true;
+				g_rototData[id].MotorTurningLeft = g_gpio.ControlCw;
+			}
+		}
+		else
+		{
+			if( g_gpio.ControlCw)
+			{
+				g_rototData[0].CounterReferenced = true;
+				EncoderReset(0);
+			}
+			if( g_gpio.ControlCcw)
+			{
+				g_rototData[1].CounterReferenced = true;
+				EncoderReset(1);
+			}
+		}
+	}
 }
 
 void GpioWriteOutput()
 {
-	g_gpio.RotorLed = g_gpio.ControlCw;
-	g_gpio.ControlLed = g_gpio.ControlCcw;
-
 	digitalWrite(PIN_GPIO_ROTOR_LED, g_gpio.RotorLed);
 	digitalWrite(PIN_GPIO_CONTROL_LED, g_gpio.ControlLed);
 }

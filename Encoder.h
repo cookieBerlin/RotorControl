@@ -7,5 +7,6 @@
 
 void SetupEncoder();
 void EncoderUpdate();
+void EncoderReset(int id);
 
 #endif /* ENCODER_H_ */

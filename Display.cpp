@@ -119,15 +119,15 @@ void DisplayShowStatusOfRotor(const int rotorId)
 	// show motor status
 	if( !g_rototData[rotorId].MotorActive)
 	{
-		lcd.print("Motor Stopped");
+		lcd.print("Motor Stopped        ");
 	}
 	else if (g_rototData[rotorId].MotorTurningLeft)
 	{
-		lcd.print("Motor Turn Left");
+		lcd.print("Motor Turn CC        ");
 	}
 	else
 	{
-		lcd.print("Motor Turn Right");
+		lcd.print("Motor Turn CCW       ");
 	}
 }
 

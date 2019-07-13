@@ -95,3 +95,13 @@ void EncoderUpdate()
 //		Serial.println( "");
 	}
 }
+
+// ----------------------------------------------------------------------------
+// - 	EncoderReset
+// ----------------------------------------------------------------------------
+void EncoderReset(int id)
+{
+	DriverIcMd::UnionInstructionByte instruction = {0};
+	instruction.bits.ABres0_ResetCounter0 = 1;
+	driverIcMd[id]->SendInstruction(instruction);
+}
