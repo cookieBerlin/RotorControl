@@ -7,5 +7,7 @@
 
 void SetupMotorControl();
 void MotorControlUpdate();
+int MotorContolGetCurrentMilliamps(int motor);
+bool MotorContolGetFault(int motor);
 
 #endif /* MOTORCONTROL_H_ */

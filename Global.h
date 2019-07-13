@@ -19,12 +19,17 @@
  // Interval of calling central controller command, in milliseconds
 #define CONTROL_INTERVALL 100
 
+// ----------------------------------------------------------------------------
+// -	CS for IC-MD counter
+// ----------------------------------------------------------------------------
 /// Chip Select for IC-MD Chip, encoder UP
-#define PIN_CHIP_SELECT_IC_MD_UP		6
-
+#define PIN_CHIP_SELECT_IC_MD_UP		A4
 /// Chip Select for IC-MD Chip, encoder Down
-#define PIN_CHIP_SELECT_IC_MD_DOWN		7
+#define PIN_CHIP_SELECT_IC_MD_DOWN		A5
 
+// ----------------------------------------------------------------------------
+// -	GPIO for extrenal IOS
+// ----------------------------------------------------------------------------
 /// Input pin for KEY
 #define PIN_GPIO_KEY					A10
 /// Input pin for Rotor Up
@@ -39,6 +44,36 @@
 #define PIN_GPIO_CONTROL_LED			A8
 /// Input pin for Control CCW
 #define PIN_GPIO_CONTROL_CCW			A14
+
+
+// ----------------------------------------------------------------------------
+// -	Pololu Dual VNH5019:		https://www.pololu.com/docs/0J49/all
+// -	HW Modifications:
+// -		open JP19 and connect JP19 Pin 2 with Arduino Pin 5
+// ----------------------------------------------------------------------------
+///		M1INA 	Motor 1 direction input A, is not the standard PIN ! (Conflict with Interrupt Input)
+#define PIN_MD_INA1			5
+///	 	M1INB 	Motor 1 direction input B
+#define PIN_MD_INB1			4
+///	 	M1EN/DIAG 	Motor 1 enable input/fault output
+#define PIN_MD_EN1DIAG1		6
+///		M1PWM 	Motor 1 speed input
+#define PIN_MD_PWM1			9
+///	 	M2INA 	Motor 2 direction input A
+#define PIN_MD_INA2			7
+///		M2INB 	Motor 2 direction input B
+#define PIN_MD_INB2			8
+///		M2PWM 	Motor 2 speed input, is not the standard PIN ! (Conflict with Ethernet Shield)
+#define PIN_MD_PWM2			11		// PWM on pin 11 user Timer1 !!!
+///		M2EN/DIAG 	Motor 2 enable input/fault output
+#define PIN_MD_EN2DIAG2		12
+///		M1CS 	Motor 1 current sense output
+#define PIN_MD_CS1			A0
+///		M2CS 	Motor 2 current sense output
+#define PIN_MD_CS2			A1
+
+
+
 
 
 // ID of the settings block
