@@ -1,8 +1,7 @@
 /*
  * Network.c
  *
- *  Created on: 14.05.2017
- *      Author: cookie
+ *  See: http://hamlib.sourceforge.net/manuals/hamlib.html#rotctld-commands
  */
 
 #include "Global.h"
@@ -23,7 +22,7 @@ EthernetClient clientROTCRL;
 
 
 // show Network Commands in Serial1
-//#define DEBUG_CLIENT_COMMANDS
+#define DEBUG_CLIENT_COMMANDS
 
 
 void NetworkROTCRL_Init()
@@ -37,7 +36,6 @@ void NetworkROTCRL_Init()
 // ----------------------------------------------------------------------------
 void decodeClientData()
 {
-  int iRetVal = 0;
   String sAnswer = "";
 
   if( readString.startsWith("P") ||
@@ -61,10 +59,22 @@ void decodeClientData()
         Serial.print("\tiSecondSpace:" );
         Serial.print( iSecondSpace);
         Serial.println(" ");
-        iRetVal = -2;
       }
       else
       {
+#ifdef DEBUG_CLIENT_COMMANDS
+//        Serial.println(" Command: '" + readString + "'");
+//        Serial.print("\tiFirstSpace: ");
+//        Serial.print( iFirstSpace);
+//        Serial.println(" ");
+//        Serial.print("\tiSecondSpace:" );
+//        Serial.print( iSecondSpace);
+//        Serial.println(" ");
+        Serial.print(g_rototData[0].TargetPositionInDegree);
+        Serial.print(" ");
+        Serial.print(g_rototData[1].TargetPositionInDegree);
+        Serial.println(" ");
+#endif
     	g_rototData[0].TargetPositionInDegree = readString.substring(iFirstSpace).toFloat();
 //        if( g_rototData[0].TargetPositionInDegree > 180) g_rototData[0].TargetPositionInDegree = 180;
 //        if( g_rototData[0].TargetPositionInDegree < -180) g_rototData[0].TargetPositionInDegree = -180;
@@ -73,19 +83,8 @@ void decodeClientData()
 //        if( g_rototData[1].TargetPositionInDegree > 90) g_rototData[1].TargetPositionInDegree = 90;
 //        if( g_rototData[1].TargetPositionInDegree < -90) g_rototData[1].TargetPositionInDegree = -90;
 
-//        Serial.print("Command: set_pos");
-//        Serial.println(" Command: '" + readString + "'");
-//        Serial.print("\tiFirstSpace: ");
-//        Serial.print( iFirstSpace);
-//        Serial.println(" ");
-//        Serial.print("\tiSecondSpace:" );
-//        Serial.print( iSecondSpace);
-//        Serial.println(" ");
-//
-//        Serial.print(g_sControlAzimuth.dPositionTaret);
-//        Serial.print(" ");
-//        Serial.print(g_sControlElevation.dPositionTaret);
-//        Serial.println(" ");
+        sAnswer += "RPRT -4";
+        //sAnswer += "\n";
       }
   }
   else if( readString.startsWith("p") ||
@@ -98,6 +97,28 @@ void decodeClientData()
     sAnswer += "\n";
     sAnswer += g_rototData[1].CounterInDegree;
     sAnswer += "\n";
+    Serial.println(sAnswer);
+  }
+  else if( readString.startsWith("-") ||
+		   readString.startsWith("\\dump_state"))
+  {
+#ifdef DEBUG_CLIENT_COMMANDS
+    Serial.println("Command: dump_state");
+#endif
+    sAnswer += "1\n"; // protocol Version
+    sAnswer += "23\n"; // Unknown
+    sAnswer += "-180.0\n"; // Min_AZ
+    sAnswer += "+180.0\n"; // Max_AZ
+    sAnswer += "0.0\n"; // Min_EL
+    sAnswer += "90.0\n"; // Max_EL
+  }
+  else if( readString.startsWith("_") ||
+		   readString.startsWith("get_info"))
+  {
+#ifdef DEBUG_CLIENT_COMMANDS
+    Serial.println("Command: get_info");
+#endif
+    sAnswer += "FTM25/6\n"; // Model Name.
   }
   else if( readString.startsWith("Q") ||
            readString.startsWith("q") ||
@@ -113,15 +134,13 @@ void decodeClientData()
       Serial.print("\r\nUnknown Command string: '");
       Serial.print(readString);
       Serial.print("'\r\n");
-      iRetVal = -1;
+      sAnswer += "RPRT -4";
   }
 
-  // send Status to Client
-  sAnswer += "RPRT ";
-  sAnswer += iRetVal;
-  sAnswer += "\n";
-
-  clientROTCRL.print(sAnswer);
+  if( sAnswer.length() > 0 )
+  {
+	  clientROTCRL.print(sAnswer);
+  }
 
   // clean Buffer
   readString = "";
