@@ -32,10 +32,10 @@ void EepromConfiguratonRead()
 		}
 
 		// default values
-		g_eepromStore.EncoderCounterScaler[0] = 1.0;
-		g_eepromStore.EncoderCounterScaler[1] = 1.0;
 		g_eepromStore.UseDhcp = false;
 		g_eepromStore.UseDhcp = true;
+		g_eepromStore.EncoderCounterScaler[0] = 360.0/22932;
+		g_eepromStore.EncoderCounterScaler[1] = 360.0/22932;
 	}
 }
 
