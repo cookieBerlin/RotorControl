@@ -12,8 +12,8 @@
 #define OFF_VALUE	0
 #define ON_VALUE	400
 
-DualVNH5019MotorShield md( PIN_MD_INA1, PIN_MD_INB1, PIN_MD_EN1DIAG1, PIN_MD_CS1, PIN_MD_PWM1,
-						   PIN_MD_INA2, PIN_MD_INB2, PIN_MD_EN2DIAG2, PIN_MD_CS2, PIN_MD_PWM2);
+DualVNH5019MotorShield md( PIN_MD_INA1, PIN_MD_INB1, PIN_MD_PWM1, PIN_MD_EN1DIAG1, PIN_MD_CS1,
+						   PIN_MD_INA2, PIN_MD_INB2, PIN_MD_PWM2, PIN_MD_EN2DIAG2, PIN_MD_CS2);
 
 // ----------------------------------------------------------------------------
 // - 	SetupMotorControl
