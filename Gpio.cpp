@@ -29,28 +29,6 @@ void GpioReadInput()
 	g_gpio.ControlCw = !digitalRead(PIN_GPIO_CONTROL_CW);
 	g_gpio.ControlCcw = !digitalRead(PIN_GPIO_CONTROL_CCW);
 
-//	Serial.print(" Key: ");
-//	Serial.print(g_gpio.Key);
-//
-//	Serial.print(", RotorUp: ");
-//	Serial.print(g_gpio.RotorUp);
-//
-//	Serial.print(", RotorLed: #");
-//	Serial.print(g_gpio.RotorLed);
-//
-//	Serial.print(", RotorDown: ");
-//	Serial.print(g_gpio.RotorDown);
-//
-//	Serial.print(", ControlCw: ");
-//	Serial.print(g_gpio.ControlCw);
-//
-//	Serial.print(", ControlLed: #");
-//	Serial.print(g_gpio.ControlLed);
-//
-//	Serial.print(", ControlCcw: ");
-//	Serial.print(g_gpio.ControlCcw);
-//
-//	Serial.println();
 
 	g_gpio.RotorLed = false;
 	g_gpio.ControlLed = false;

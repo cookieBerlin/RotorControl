@@ -7,6 +7,5 @@
 
 void NetworkCommandline_Init();
 void NetworkCommandline_handleCommunication();
-void Console_ShowStatusLine();
 
 #endif /* NETWORK_COMMANDLINE_H_ */

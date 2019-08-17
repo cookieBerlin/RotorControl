@@ -135,5 +135,7 @@ typedef struct tag_struct_GpioData
 EXTERN struct_EepromStore			g_eepromStore;
 EXTERN volatile struct_RototData	g_rototData[NumberOfRotors];
 EXTERN volatile struct_GpioData		g_gpio;
+EXTERN unsigned long 				g_ulShowSerialStatsLine;	// show status Line every [ms], 0 = off
+
 
 #endif /* GLOBAL_H_ */
