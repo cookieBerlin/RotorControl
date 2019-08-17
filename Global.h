@@ -14,6 +14,8 @@
 #include "Network.h"
 #include "NetworkROTCRL.h"
 #include "NetworkCommandline.h"
+#include "NetworkCommandline_Main.h"
+#include "NetworkCommandline_Config.h"
 #include "MotorControl.h"
 
  // Interval of calling central controller command, in milliseconds

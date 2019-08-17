@@ -13,22 +13,18 @@ extern Commandline cmd;
 extern EthernetClient clientTelnet;
 
 
-void Console_Menu_ConfigRead( void);
-void Console_Menu_ConfigWrite( void);
-void Console_Menu_ConfigShow( void);
+void Console_Menu_Config( void);
 void Console_Menu_SetMotorStop( void);
-void Console_Menu_Help( void);
+void Console_Menu_Main_Help( void);
 void Console_Menu_ShowGpio( void);
 void Console_Menu_ShowStatus( void);
 void Console_Menu_ShowStatusLine( void);
 
 static Commandline::tCmdlineMenu cmdlineMenuMain[] =
 {
-	{"?", 							Console_Menu_Help},
-	{"configRead",					Console_Menu_ConfigRead},
-	{"configWrite",					Console_Menu_ConfigWrite},
-	{"configShow",					Console_Menu_ConfigShow},
-	{"help",						Console_Menu_Help},
+	{"?", 							Console_Menu_Main_Help},
+	{"config",					    Console_Menu_Config},
+	{"help",						Console_Menu_Main_Help},
 	{"setMotorStop",				Console_Menu_SetMotorStop},
 	{"showGpio",					Console_Menu_ShowGpio},
 	{"showStatus",					Console_Menu_ShowStatus},
@@ -44,37 +40,17 @@ void NetworkCommandline_Main_Activate()
 
 //##################################################################################################################
 
-void Console_Menu_ConfigRead( void)
+void Console_Menu_Config( void)
 {
-	EepromConfiguratonRead();
+	NetworkCommandline_Config_Activate();
 }
 
-void Console_Menu_ConfigWrite( void)
-{
-	EepromConfiguratonWrite();
-}
-
-void Console_Menu_ConfigShow( void)
-{
-	clientTelnet.print( "\tUse Dhcp:                         ");
-	clientTelnet.print( g_eepromStore.UseDhcp);
-	clientTelnet.println( "");
-
-	clientTelnet.print( "\tEncoder Counter Scaler Up / Down: ");
-	clientTelnet.print( g_eepromStore.EncoderCounterScaler[R_UP]);
-	clientTelnet.print( " / ");
-	clientTelnet.print( g_eepromStore.EncoderCounterScaler[R_DOWN]);
-	clientTelnet.println( "");
-}
-
-void Console_Menu_Help( void)
+void Console_Menu_Main_Help( void)
 {
 	cmd.Console_sendString( (char*)
 		"****************************************************************\r\n"
 		"* Available commands are:                                      *\r\n"
-		"*   configRead                 - Read Config from EEprom       *\r\n"
-		"*   configWrite                - Write Config toEEprom         *\r\n"
-		"*   configShow                 - Show Configuration            *\r\n"
+		"*   config                     - Goto configuration menu       *\r\n"
 		"*   help                       - displays available commands   *\r\n"
 		"*   setMotorStop               - Stop Motors                   *\r\n"
 		"*   showGpio                   - show GPIO values              *\r\n"

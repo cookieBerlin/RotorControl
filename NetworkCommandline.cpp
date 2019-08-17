@@ -9,8 +9,6 @@
 #include "libraries/commandline/commandline.h"
 #include "libraries/commandline/vt100.h"
 
-#include "NetworkCommandline_Main.h"
-
 // ----------------------------------------------------------------------------
 // - 	Network Service
 // ----------------------------------------------------------------------------
