@@ -38,11 +38,11 @@ void SetupMotorControl()
 // ----------------------------------------------------------------------------
 void MotorControlUpdate()
 {
-	if( !g_rototData[0].MotorActive)
+	if( !g_rototData[R_DOWN].MotorActive)
 	{
 		md.setM1Speed(OFF_VALUE);
 	}
-	else if( g_rototData[0].MotorTurningLeft)
+	else if( g_rototData[R_DOWN].MotorTurningLeft)
 	{
 		md.setM1Speed(ON_VALUE);
 	}
@@ -51,11 +51,11 @@ void MotorControlUpdate()
 		md.setM1Speed(-ON_VALUE);
 	}
 
-	if( !g_rototData[1].MotorActive)
+	if( !g_rototData[R_UP].MotorActive)
 	{
 		md.setM2Speed(OFF_VALUE);
 	}
-	else if( g_rototData[1].MotorTurningLeft)
+	else if( g_rototData[R_UP].MotorTurningLeft)
 	{
 		md.setM2Speed(ON_VALUE);
 	}

@@ -73,7 +73,10 @@
 #define PIN_MD_CS2			A1
 
 
-
+// Index of Rotor UP in g_rototData array
+#define R_DOWN 	0
+// Index of Rotor Down in g_rototData array
+#define R_UP	1
 
 
 // ID of the settings block

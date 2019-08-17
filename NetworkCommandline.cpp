@@ -156,9 +156,6 @@ void Console_Menu_ShowStatus( void)
 	cmd.vt100EraseToLineEnd();
 
 	// show Values
-	clientTelnet.print( "TODO");
-	clientTelnet.print( g_rototData[0].CounterInDegree);
-	clientTelnet.println("");
 
 	// show command prompt
 	cmd.cmdlineRepaint();
@@ -182,6 +179,12 @@ void Console_ShowStatusLine()
 	previousMillis = currentMillis;	// save the current time
 
 	Console_Menu_ShowStatus();
+}
+
+void Console_Menu_SetMotorStop( void)
+{
+	g_rototData[R_DOWN].MotorActive = false;
+	g_rototData[R_UP].MotorActive = false;
 }
 
 void Console_Menu_configRead( void)

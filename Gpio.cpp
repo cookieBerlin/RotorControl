@@ -59,7 +59,7 @@ void GpioReadInput()
 		g_gpio.RotorLed = true;
 		if(g_gpio.RotorUp || g_gpio.RotorDown)
 		{
-			int id = g_gpio.RotorUp ? 1 : 0;
+			int id = g_gpio.RotorUp ? R_UP : R_DOWN;
 
 			g_rototData[id].MotorActive = false;
 			if( g_gpio.ControlCw ^ g_gpio.ControlCcw)	// if one key pressed
@@ -71,15 +71,15 @@ void GpioReadInput()
 		}
 		else
 		{
-			if( g_gpio.ControlCw)
-			{
-				g_rototData[0].CounterReferenced = true;
-				EncoderReset(0);
-			}
 			if( g_gpio.ControlCcw)
 			{
-				g_rototData[1].CounterReferenced = true;
-				EncoderReset(1);
+				g_rototData[R_DOWN].CounterReferenced = true;
+				EncoderReset(R_DOWN);
+			}
+			if( g_gpio.ControlCw)
+			{
+				g_rototData[R_UP].CounterReferenced = true;
+				EncoderReset(R_UP);
 			}
 		}
 	}

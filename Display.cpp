@@ -89,7 +89,7 @@ void DisplayTextLine(const int line, const char text[])
 // ----------------------------------------------------------------------------
 void DisplayShowStatusOfRotor(const int rotorId)
 {
-	const int line = rotorId==0 ? 0 : 2;
+	const int line = (rotorId==R_UP) ? 0 : 2;
 
 	// goto first line
 	lcd.setCursor(0, line);
@@ -136,6 +136,6 @@ void DisplayShowStatusOfRotor(const int rotorId)
 // ----------------------------------------------------------------------------
 void DisplayShowStatus()
 {
-	DisplayShowStatusOfRotor(0);
-	DisplayShowStatusOfRotor(1);
+	DisplayShowStatusOfRotor(R_DOWN);
+	DisplayShowStatusOfRotor(R_UP);
 }

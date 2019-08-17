@@ -70,18 +70,18 @@ void decodeClientData()
 //        Serial.print("\tiSecondSpace:" );
 //        Serial.print( iSecondSpace);
 //        Serial.println(" ");
-        Serial.print(g_rototData[0].TargetPositionInDegree);
+        Serial.print(g_rototData[R_DOWN].TargetPositionInDegree);
         Serial.print(" ");
-        Serial.print(g_rototData[1].TargetPositionInDegree);
+        Serial.print(g_rototData[R_UP].TargetPositionInDegree);
         Serial.println(" ");
 #endif
-    	g_rototData[0].TargetPositionInDegree = readString.substring(iFirstSpace).toFloat();
-//        if( g_rototData[0].TargetPositionInDegree > 180) g_rototData[0].TargetPositionInDegree = 180;
-//        if( g_rototData[0].TargetPositionInDegree < -180) g_rototData[0].TargetPositionInDegree = -180;
+    	g_rototData[R_DOWN].TargetPositionInDegree = readString.substring(iFirstSpace).toFloat();
+//        if( g_rototData[R_DOWN].TargetPositionInDegree > 180) g_rototData[R_DOWN].TargetPositionInDegree = 180;
+//        if( g_rototData[R_DOWN].TargetPositionInDegree < -180) g_rototData[R_DOWN].TargetPositionInDegree = -180;
 
-        g_rototData[1].TargetPositionInDegree = readString.substring(iSecondSpace).toFloat();
-//        if( g_rototData[1].TargetPositionInDegree > 90) g_rototData[1].TargetPositionInDegree = 90;
-//        if( g_rototData[1].TargetPositionInDegree < -90) g_rototData[1].TargetPositionInDegree = -90;
+        g_rototData[R_UP].TargetPositionInDegree = readString.substring(iSecondSpace).toFloat();
+//        if( g_rototData[R_UP].TargetPositionInDegree > 90) g_rototData[R_UP].TargetPositionInDegree = 90;
+//        if( g_rototData[R_UP].TargetPositionInDegree < -90) g_rototData[R_UP].TargetPositionInDegree = -90;
 
         sAnswer += "RPRT -4";
         //sAnswer += "\n";
@@ -93,9 +93,9 @@ void decodeClientData()
 #ifdef DEBUG_CLIENT_COMMANDS
     Serial.println("Command: get_pos");
 #endif
-    sAnswer += g_rototData[0].CounterInDegree;
+    sAnswer += g_rototData[R_DOWN].CounterInDegree;
     sAnswer += "\n";
-    sAnswer += g_rototData[1].CounterInDegree;
+    sAnswer += g_rototData[R_UP].CounterInDegree;
     sAnswer += "\n";
     Serial.println(sAnswer);
   }
