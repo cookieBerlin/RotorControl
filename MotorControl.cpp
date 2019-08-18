@@ -31,6 +31,8 @@ void SetupMotorControl()
 
 	// set actual config to GPIO output
 	MotorControlUpdate();
+
+	g_enable_PID = false;
 }
 
 // ----------------------------------------------------------------------------
@@ -38,6 +40,36 @@ void SetupMotorControl()
 // ----------------------------------------------------------------------------
 void MotorControlUpdate()
 {
+	if( !g_gpio.Key && g_enable_PID)
+	{
+		for(int i=0; i<NumberOfRotors ; i++)
+		{
+			Serial.print("MotorControlUpdate PID");
+			Serial.print(i);
+			Serial.print(":");
+			Serial.print(" Count: ");
+			Serial.print(g_rototData[i].CounterInDegree );
+			Serial.print(" Target: ");
+			Serial.print(g_rototData[i].TargetPositionInDegree);
+
+			g_rototData[i].MotorActive = g_rototData[i].TargetPositionInDegree != g_rototData[i].CounterInDegree;
+
+
+
+			// TODO user counter limits
+			g_rototData[i].MotorTurningLeft = g_rototData[i].TargetPositionInDegree > g_rototData[i].CounterInDegree;
+
+
+
+			Serial.print(" MotorActive: ");
+			Serial.print(g_rototData[i].MotorActive);
+			Serial.print(" MotorTurningLeft: ");
+			Serial.print(g_rototData[i].MotorTurningLeft);
+			Serial.println();
+		}
+
+	}
+
 	if( !g_rototData[R_DOWN].MotorActive)
 	{
 		md.setM1Speed(OFF_VALUE);

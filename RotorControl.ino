@@ -29,7 +29,7 @@ void setup()
 
 	// show start message
 	DisplayTextLine(0, "FTM25/6 Controller");
-	DisplayTextLine(1, "V0.0.3    @DB3AC");
+	DisplayTextLine(1, "V0.0.5    @DB3AC");
 
 	EepromConfiguratonRead();
 
