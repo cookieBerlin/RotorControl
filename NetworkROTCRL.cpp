@@ -11,30 +11,30 @@
 #include <WString.h>
 
 
-// ----------------------------------------------------------------------------
-// - 	Network Service
-// ----------------------------------------------------------------------------
-// Configure Server Port to 4533, default of rotclt
-EthernetServer serverROTCRL(4533);
-
-String readString = ""; //string for fetching data form Client
-EthernetClient clientROTCRL;
-
-
 // show Network Commands in Serial1
-#define DEBUG_CLIENT_COMMANDS
+//#define DEBUG_CLIENT_COMMANDS
 
-
-void NetworkROTCRL_Init()
+// ----------------------------------------------------------------------------
+NetworkROTCRL::NetworkROTCRL(uint16_t Port, double *ActualAzimuth, double *ActualElevation, double *TargetAzimuth, double *TargetElevation)
 {
-	Serial.println("Start Network ROTCRL");
+	Serial.print("Start Network ROTCRL(Port ");
+	Serial.print(Port);
+	Serial.println(")");
 
 	// start listening for clients
-	serverROTCRL.begin();
+	serverROTCRL = new EthernetServer(Port);
+	//serverROTCRL->
+	serverROTCRL->begin();
+
+	this->eState = eWaitForNewClient;
+	this->actualAzimuth = ActualAzimuth;
+	this->actualElevation = ActualElevation;
+	this->targetAzimuth = TargetAzimuth;
+	this->targetElevation = TargetElevation;
 }
 
 // ----------------------------------------------------------------------------
-void decodeClientData()
+void NetworkROTCRL::DecodeClientData(void)
 {
   String sAnswer = "";
 
@@ -47,7 +47,7 @@ void decodeClientData()
 
       // search for spaces
       int iFirstSpace = readString.indexOf(' ');
-      int iSecondSpace = readString.indexOf(' ', (iFirstSpace + 5));
+      int iSecondSpace = readString.indexOf(' ', (iFirstSpace + 2));
 
       if( (iFirstSpace == -1) ||
           (iSecondSpace == -1) )
@@ -63,26 +63,29 @@ void decodeClientData()
       else
       {
 #ifdef DEBUG_CLIENT_COMMANDS
-//        Serial.println(" Command: '" + readString + "'");
-//        Serial.print("\tiFirstSpace: ");
-//        Serial.print( iFirstSpace);
-//        Serial.println(" ");
-//        Serial.print("\tiSecondSpace:" );
-//        Serial.print( iSecondSpace);
-//        Serial.println(" ");
-        Serial.print(g_rototData[R_DOWN].TargetPositionInDegree);
-        Serial.print(" ");
-        Serial.print(g_rototData[R_UP].TargetPositionInDegree);
+        Serial.println(" Command: '" + readString + "'");
+        Serial.print("\tiFirstSpace: ");
+        Serial.print( iFirstSpace);
+        Serial.println(" ");
+        Serial.print("\tiSecondSpace:" );
+        Serial.print( iSecondSpace);
         Serial.println(" ");
 #endif
-    	g_rototData[R_DOWN].TargetPositionInDegree = readString.substring(iFirstSpace).toFloat();
-//        if( g_rototData[R_DOWN].TargetPositionInDegree > 180) g_rototData[R_DOWN].TargetPositionInDegree = 180;
-//        if( g_rototData[R_DOWN].TargetPositionInDegree < -180) g_rototData[R_DOWN].TargetPositionInDegree = -180;
+        if( targetAzimuth != NULL)
+        {
+        	*targetAzimuth = readString.substring(iFirstSpace).toFloat();
+        }
+        if( targetElevation != NULL)
+        {
+        	*targetElevation = readString.substring(iSecondSpace).toFloat();
+        }
 
-        g_rototData[R_UP].TargetPositionInDegree = readString.substring(iSecondSpace).toFloat();
-//        if( g_rototData[R_UP].TargetPositionInDegree > 90) g_rototData[R_UP].TargetPositionInDegree = 90;
-//        if( g_rototData[R_UP].TargetPositionInDegree < -90) g_rototData[R_UP].TargetPositionInDegree = -90;
-
+#ifdef DEBUG_CLIENT_COMMANDS
+        Serial.print(*targetAzimuth);
+        Serial.print(" ");
+        Serial.print(*targetElevation);
+        Serial.println(" ");
+#endif
         sAnswer += "RPRT -4";
         //sAnswer += "\n";
       }
@@ -93,9 +96,9 @@ void decodeClientData()
 #ifdef DEBUG_CLIENT_COMMANDS
     Serial.println("Command: get_pos");
 #endif
-    sAnswer += g_rototData[R_DOWN].CounterInDegree;
+    sAnswer += (actualAzimuth!=NULL) ? *actualAzimuth : 0;
     sAnswer += "\n";
-    sAnswer += g_rototData[R_UP].CounterInDegree;
+    sAnswer += (actualElevation!=NULL) ? *actualElevation : 0;
     sAnswer += "\n";
     Serial.println(sAnswer);
   }
@@ -129,6 +132,18 @@ void decodeClientData()
 #endif
       clientROTCRL.stop();
   }
+  else if( readString.startsWith("help"))
+  {
+#ifdef DEBUG_CLIENT_COMMANDS
+      Serial.println("Command: Help");
+#endif
+      sAnswer += "Commands:\r\n";
+      sAnswer += "\t P / set_pos\r\n";
+      sAnswer += "\t p / get_pos\r\n";
+      sAnswer += "\t _ / get_info\r\n";
+      sAnswer += "\t - / dump_state";
+      sAnswer += "\t Q / q / exit rotctl\r\n";
+  }
   else
   {
       Serial.print("\r\nUnknown Command string: '");
@@ -146,25 +161,16 @@ void decodeClientData()
   readString = "";
 }
 
-void NetworkROTCRL_handleCommunication()
+void NetworkROTCRL::HandleCommunication()
 {
-	typedef enum tag_enum_NetWorkCommunication_StateMaschine
-	{
-		eWaitForNewClient,
-		eWaitForData,
-		eClientDisconnect,
-	} enum_NetWorkCommunication_StateMaschine;
-
-	static enum_NetWorkCommunication_StateMaschine eState = eWaitForNewClient;
-
 	switch ( eState )
 	{
 		case eWaitForNewClient:
 			// wait for a new clientROTCRL:
-			clientROTCRL = serverROTCRL.available();
+			clientROTCRL = serverROTCRL->available();
 			if (clientROTCRL)
 			{
-				Serial.println("Client Connected");
+				Serial.println("Network ROTCRL: Client Connected");
 		    	readString = "";
 		    	eState = eWaitForData;
 			}
@@ -188,12 +194,12 @@ void NetworkROTCRL_handleCommunication()
 				// if HTTP request has ended
 				if (c == '\n')
 				{
-					decodeClientData();
+					DecodeClientData();
 				}
 			}
 			break;
 		case eClientDisconnect:
-		    Serial.println("Client Disconnected");
+		    Serial.println("Network ROTCRL: Client Disconnected");
 		    clientROTCRL = 0;
 		    eState = eWaitForNewClient;
 			break;

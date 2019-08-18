@@ -12,6 +12,9 @@ void SetupSerial()
 
 	// this check is only needed on the Leonardo: wait for serial port to connect. Needed for native USB port only
 	//while (!Serial);
+
+	Serial1.begin(115200);
+	Serial1.println("Hello World");
 }
 
 // ----------------------------------------------------------------------------
@@ -33,7 +36,8 @@ void setup()
 	SetupMotorControl();
 
 	SetupNetwork();
-	NetworkROTCRL_Init();
+	g_networkRotcrl[R_UP] =   new NetworkROTCRL(4533, &g_rototData[R_UP].CounterInDegree,   NULL, &g_rototData[R_UP].TargetPositionInDegree,   NULL);
+	g_networkRotcrl[R_DOWN] = new NetworkROTCRL(4534, &g_rototData[R_DOWN].CounterInDegree, NULL, &g_rototData[R_DOWN].TargetPositionInDegree, NULL);
 	NetworkCommandline_Init();
 
 	SetupEncoder();
@@ -76,7 +80,8 @@ void CentralContol()
 // ----------------------------------------------------------------------------
 void loop()
 {
-	NetworkROTCRL_handleCommunication();
+	g_networkRotcrl[R_UP]->HandleCommunication();
+	g_networkRotcrl[R_DOWN]->HandleCommunication();
 	NetworkCommandline_handleCommunication();
 
 	CentralContol();
