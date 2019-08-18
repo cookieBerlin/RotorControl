@@ -35,6 +35,9 @@ void GpioReadInput()
 	if(g_gpio.Key)
 	{
 		g_gpio.RotorLed = true;
+		g_rototData[R_UP].MotorActive = false;
+		g_rototData[R_DOWN].MotorActive = false;
+
 		if(g_gpio.RotorUp || g_gpio.RotorDown)
 		{
 			int id = g_gpio.RotorUp ? R_UP : R_DOWN;
@@ -44,7 +47,7 @@ void GpioReadInput()
 			{
 				g_gpio.ControlLed = true;
 				g_rototData[id].MotorActive = true;
-				g_rototData[id].MotorTurningLeft = g_gpio.ControlCw;
+				g_rototData[id].MotorTurningCcw = g_gpio.ControlCcw;
 			}
 		}
 		else

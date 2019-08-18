@@ -99,7 +99,7 @@ typedef struct tag_struct_RototData
 	double		CounterInDegree;
 	bool		CounterReferenced;
 	bool		MotorActive;
-	bool		MotorTurningLeft;
+	bool		MotorTurningCcw;
 	double		TargetPositionInDegree;
 } struct_RototData;
 

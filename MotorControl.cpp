@@ -57,14 +57,14 @@ void MotorControlUpdate()
 
 
 			// TODO user counter limits
-			g_rototData[i].MotorTurningLeft = g_rototData[i].TargetPositionInDegree > g_rototData[i].CounterInDegree;
+			g_rototData[i].MotorTurningCcw = g_rototData[i].TargetPositionInDegree > g_rototData[i].CounterInDegree;
 
 
 
 			Serial.print(" MotorActive: ");
 			Serial.print(g_rototData[i].MotorActive);
 			Serial.print(" MotorTurningLeft: ");
-			Serial.print(g_rototData[i].MotorTurningLeft);
+			Serial.print(g_rototData[i].MotorTurningCcw);
 			Serial.println();
 		}
 
@@ -74,7 +74,7 @@ void MotorControlUpdate()
 	{
 		md.setM1Speed(OFF_VALUE);
 	}
-	else if( g_rototData[R_DOWN].MotorTurningLeft)
+	else if( g_rototData[R_DOWN].MotorTurningCcw)
 	{
 		md.setM1Speed(ON_VALUE);
 	}
@@ -87,7 +87,7 @@ void MotorControlUpdate()
 	{
 		md.setM2Speed(OFF_VALUE);
 	}
-	else if( g_rototData[R_UP].MotorTurningLeft)
+	else if( g_rototData[R_UP].MotorTurningCcw)
 	{
 		md.setM2Speed(ON_VALUE);
 	}

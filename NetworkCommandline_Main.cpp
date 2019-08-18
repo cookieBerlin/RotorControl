@@ -170,9 +170,9 @@ void Console_Menu_ShowStatus( void)
 	clientTelnet.print(" Steps");
 
 	clientTelnet.print( "\tMotorTurningLeft: ");
-	clientTelnet.print( g_rototData[R_DOWN].MotorTurningLeft);
+	clientTelnet.print( g_rototData[R_DOWN].MotorTurningCcw);
 	clientTelnet.print( "/");
-	clientTelnet.print( g_rototData[R_UP].MotorTurningLeft);
+	clientTelnet.print( g_rototData[R_UP].MotorTurningCcw);
 	clientTelnet.print(" Steps");
 
 	clientTelnet.print( "\tTargetPosition: ");
