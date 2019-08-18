@@ -111,6 +111,12 @@ typedef struct tag_struct_EepromStore
 	bool					UseDhcp;
 	// hold Scaler for Encoder count -> Degree
 	double					EncoderCounterScaler[NumberOfRotors];
+
+	// hold Min counter of Rotors
+	double					RotorMinCounterInDegree[NumberOfRotors];
+	// hold Max counter of Rotors
+	double					RotorMaxCounterInDegree[NumberOfRotors];
+
 } struct_EepromStore;
 
 typedef struct tag_struct_GpioData
