@@ -82,7 +82,7 @@
 
 
 // ID of the settings block
-#define CONFIG_VERSION "RC0"
+#define CONFIG_VERSION "RC1"
 
 // Tell it where to store your config data in EEPROM
 #define CONFIG_START 32

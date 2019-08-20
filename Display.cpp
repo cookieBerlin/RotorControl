@@ -123,11 +123,11 @@ void DisplayShowStatusOfRotor(const int rotorId)
 	}
 	else if (g_rototData[rotorId].MotorTurningCcw)
 	{
-		lcd.print("Motor Turn CC        ");
+		lcd.print("Motor Turn CCW       ");
 	}
 	else
 	{
-		lcd.print("Motor Turn CCW       ");
+		lcd.print("Motor Turn CW        ");
 	}
 }
 
