@@ -155,19 +155,25 @@ void Console_Menu_ShowStatus( void)
 	clientTelnet.print( g_rototData[R_DOWN].CounterReferenced);
 	clientTelnet.print( "/");
 	clientTelnet.print( g_rototData[R_UP].CounterReferenced);
-	clientTelnet.print(" Steps");
+	clientTelnet.print(" ");
 
 	clientTelnet.print( "\tMotorActive: ");
 	clientTelnet.print( g_rototData[R_DOWN].MotorActive);
 	clientTelnet.print( "/");
 	clientTelnet.print( g_rototData[R_UP].MotorActive);
-	clientTelnet.print(" Steps");
+	clientTelnet.print(" ");
+
+	clientTelnet.print( "\tMotorCurrent: ");
+	clientTelnet.print( g_rototData[R_DOWN].MotorCurrentInMa);
+	clientTelnet.print( "/");
+	clientTelnet.print( g_rototData[R_UP].MotorCurrentInMa);
+	clientTelnet.print(" mA ");
 
 	clientTelnet.print( "\tMotorTurningLeft: ");
 	clientTelnet.print( g_rototData[R_DOWN].MotorTurningCcw);
 	clientTelnet.print( "/");
 	clientTelnet.print( g_rototData[R_UP].MotorTurningCcw);
-	clientTelnet.print(" Steps");
+	clientTelnet.print(" ");
 
 	clientTelnet.print( "\tTargetPosition: ");
 	clientTelnet.print( g_rototData[R_DOWN].TargetPositionInDegree);

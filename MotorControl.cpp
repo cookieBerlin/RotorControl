@@ -103,6 +103,9 @@ void MotorControlUpdate()
 	{
 		md.setM2Speed(-ON_VALUE);
 	}
+
+	 g_rototData[R_DOWN].MotorCurrentInMa = md.getM1CurrentMilliamps();
+	 g_rototData[R_UP].MotorCurrentInMa = md.getM2CurrentMilliamps();
 }
 
 // ----------------------------------------------------------------------------

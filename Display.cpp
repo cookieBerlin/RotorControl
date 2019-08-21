@@ -105,7 +105,7 @@ void DisplayShowStatusOfRotor(const int rotorId)
 	// show counter
 	lcd.print("(");
 	lcd.print(g_rototData[rotorId].CounterInSteps);
-	lcd.print(")");
+	lcd.print(")     ");
 
 	// goto second line
 	lcd.setCursor(0, line+1);
@@ -119,16 +119,21 @@ void DisplayShowStatusOfRotor(const int rotorId)
 	// show motor status
 	if( !g_rototData[rotorId].MotorActive)
 	{
-		lcd.print("Motor Stopped        ");
+		lcd.print("Motor Stopped ");
 	}
 	else if (g_rototData[rotorId].MotorTurningCcw)
 	{
-		lcd.print("Motor Turn CCW       ");
+		lcd.print("Motor Turn CCW ");
 	}
 	else
 	{
-		lcd.print("Motor Turn CW        ");
+		lcd.print("Motor Turn CW  ");
 	}
+
+	// show curent
+	lcd.print("(");
+	lcd.print(g_rototData[rotorId].MotorCurrentInMa);
+	lcd.print(" mA)");
 }
 
 // ----------------------------------------------------------------------------

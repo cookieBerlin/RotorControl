@@ -101,6 +101,7 @@ typedef struct tag_struct_RototData
 	bool		MotorActive;
 	bool		MotorTurningCcw;
 	double		TargetPositionInDegree;
+	int 		MotorCurrentInMa;
 } struct_RototData;
 
 typedef struct tag_struct_EepromStore
@@ -116,7 +117,6 @@ typedef struct tag_struct_EepromStore
 	double					RotorMinCounterInDegree[NumberOfRotors];
 	// hold Max counter of Rotors
 	double					RotorMaxCounterInDegree[NumberOfRotors];
-
 } struct_EepromStore;
 
 typedef struct tag_struct_GpioData
