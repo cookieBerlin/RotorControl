@@ -43,16 +43,6 @@ void MotorControlUpdate()
 	{
 		for(int i=0; i<NumberOfRotors ; i++)
 		{
-			Serial.print("MotorControlUpdate PID");
-			Serial.print(i);
-			Serial.print(":");
-			Serial.print(" Count: ");
-			Serial.print(g_rototData[i].CounterInDegree );
-			Serial.print(" Target: ");
-			Serial.print(g_rototData[i].TargetPositionInDegree);
-
-
-
 			if( (g_rototData[i].TargetPositionInDegree == NAN))
 			{
 				g_rototData[i].MotorActive = false;
@@ -65,17 +55,8 @@ void MotorControlUpdate()
 
 				// TODO user counter limits
 				g_rototData[i].MotorTurningCcw = g_rototData[i].TargetPositionInDegree < g_rototData[i].CounterInDegree;
-
-				Serial.print(" MotorActive: ");
-				Serial.print(g_rototData[i].MotorActive);
-				Serial.print(" MotorTurningLeft: ");
-				Serial.print(g_rototData[i].MotorTurningCcw);
 			}
-
-
-			Serial.println();
 		}
-
 	}
 
 	if( !g_rototData[R_DOWN].MotorActive)

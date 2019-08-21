@@ -33,7 +33,7 @@ void EepromConfiguratonRead()
 
 		// default values
 		g_eepromStore.UseDhcp = false;
-		//g_eepromStore.UseDhcp = true;
+		g_eepromStore.UseDhcp = true;
 		g_eepromStore.EncoderCounterScaler[R_DOWN] = 360.0/22932;
 		g_eepromStore.EncoderCounterScaler[R_UP] = -360.0/22932;
 
