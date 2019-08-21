@@ -145,6 +145,5 @@ EXTERN struct_RototData				g_rototData[NumberOfRotors];
 EXTERN struct_GpioData				g_gpio;
 EXTERN unsigned long 				g_ulShowSerialStatsLine;	// show status Line every [ms], 0 = off
 EXTERN NetworkROTCRL 				*g_networkRotcrl[NumberOfRotors];
-EXTERN bool							g_enable_PID;
 
 #endif /* GLOBAL_H_ */

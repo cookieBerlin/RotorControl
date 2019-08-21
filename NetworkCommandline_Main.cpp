@@ -17,7 +17,6 @@ void Console_Menu_Config( void);
 void Console_Menu_Main_Help( void);
 void Console_Menu_ResetCounterDown( void);
 void Console_Menu_ResetCounterUp( void);
-void Console_Menu_SetEnablePID( void);
 void Console_Menu_SetRotorDown( void);
 void Console_Menu_SetRotorUp( void);
 void Console_Menu_SetRotorStop( void);
@@ -32,7 +31,6 @@ static Commandline::tCmdlineMenu cmdlineMenuMain[] =
 	{"help",						Console_Menu_Main_Help},
 	{"resetCounterDown",			Console_Menu_ResetCounterDown},
 	{"resetCounterUp",				Console_Menu_ResetCounterUp},
-	{"setEnablePID",				Console_Menu_SetEnablePID},
 	{"setRotorDown",				Console_Menu_SetRotorDown},
 	{"setRotorUp",					Console_Menu_SetRotorUp},
 	{"setRotorStop",				Console_Menu_SetRotorStop},
@@ -65,7 +63,6 @@ void Console_Menu_Main_Help( void)
 		"*   help                       - displays available commands   *\r\n"
 		"*   resetCounterDown           - reset Counter Down            *\r\n"
 		"*   resetCounterUp             - reset Counter Up              *\r\n"
-		"*   setEnablePID <0/1>         - enable auto rotor control     *\r\n"
 		"*   setRotorDown <pos>         - move rotor down to pos degree *\r\n"
 		"*   setRotorUp <pos>           - move rotor up to pos degree   *\r\n"
 		"*   setRotorStop               - Stop rotor                    *\r\n"
@@ -88,11 +85,6 @@ void Console_Menu_ResetCounterUp( void)
 	EncoderReset(R_UP);
 }
 
-void Console_Menu_SetEnablePID( void)
-{
-	g_enable_PID = cmd.cmdlineGetArgInt(1);
-}
-
 void Console_Menu_SetRotorUp( void)
 {
 	g_rototData[R_UP].TargetPositionInDegree = cmd.cmdlineGetArgDouble(1);
@@ -106,7 +98,9 @@ void Console_Menu_SetRotorDown( void)
 void Console_Menu_SetRotorStop( void)
 {
 	g_rototData[R_DOWN].MotorActive = false;
+	g_rototData[R_DOWN].TargetPositionInDegree = NAN;
 	g_rototData[R_UP].MotorActive = false;
+	g_rototData[R_UP].TargetPositionInDegree = NAN;
 }
 
 

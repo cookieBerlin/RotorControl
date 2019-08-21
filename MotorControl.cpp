@@ -27,12 +27,11 @@ void SetupMotorControl()
 	for( int i=0; i<NumberOfRotors; i++)
 	{
 		g_rototData[i].MotorActive = false;
+		g_rototData[i].TargetPositionInDegree = NAN;
 	}
 
 	// set actual config to GPIO output
 	MotorControlUpdate();
-
-	g_enable_PID = false;
 }
 
 // ----------------------------------------------------------------------------
@@ -40,7 +39,7 @@ void SetupMotorControl()
 // ----------------------------------------------------------------------------
 void MotorControlUpdate()
 {
-	if( !g_gpio.Key && g_enable_PID)
+	if( !g_gpio.Key)
 	{
 		for(int i=0; i<NumberOfRotors ; i++)
 		{
@@ -52,19 +51,28 @@ void MotorControlUpdate()
 			Serial.print(" Target: ");
 			Serial.print(g_rototData[i].TargetPositionInDegree);
 
-			g_rototData[i].MotorActive = g_rototData[i].TargetPositionInDegree != g_rototData[i].CounterInDegree;
 
 
+			if( (g_rototData[i].TargetPositionInDegree == NAN))
+			{
+				g_rototData[i].MotorActive = false;
 
-			// TODO user counter limits
-			g_rototData[i].MotorTurningCcw = g_rototData[i].TargetPositionInDegree > g_rototData[i].CounterInDegree;
+				Serial.print(" MotorActive: NAN");
+			}
+			else
+			{
+				g_rototData[i].MotorActive = abs(g_rototData[i].TargetPositionInDegree - g_rototData[i].CounterInDegree) > 1.0;
+
+				// TODO user counter limits
+				g_rototData[i].MotorTurningCcw = g_rototData[i].TargetPositionInDegree < g_rototData[i].CounterInDegree;
+
+				Serial.print(" MotorActive: ");
+				Serial.print(g_rototData[i].MotorActive);
+				Serial.print(" MotorTurningLeft: ");
+				Serial.print(g_rototData[i].MotorTurningCcw);
+			}
 
 
-
-			Serial.print(" MotorActive: ");
-			Serial.print(g_rototData[i].MotorActive);
-			Serial.print(" MotorTurningLeft: ");
-			Serial.print(g_rototData[i].MotorTurningCcw);
 			Serial.println();
 		}
 
