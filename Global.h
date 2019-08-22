@@ -46,6 +46,10 @@
 #define PIN_GPIO_CONTROL_LED			A8
 /// Input pin for Control CCW
 #define PIN_GPIO_CONTROL_CCW			A14
+// Output for Analog Position
+#define PIN_GPIO_ANALOG_POS0			44
+// Output for Analog Position
+#define PIN_GPIO_ANALOG_POS1			46
 
 
 // ----------------------------------------------------------------------------

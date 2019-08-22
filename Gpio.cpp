@@ -19,6 +19,9 @@ void SetupGPIO()
 	pinMode(PIN_GPIO_CONTROL_CW, INPUT);
 	pinMode(PIN_GPIO_CONTROL_LED, OUTPUT);
 	pinMode(PIN_GPIO_CONTROL_CCW, INPUT);
+
+	pinMode(PIN_GPIO_ANALOG_POS0, OUTPUT);  // sets the pin as output
+	pinMode(PIN_GPIO_ANALOG_POS1, OUTPUT);  // sets the pin as output
 }
 
 void GpioReadInput()
@@ -72,4 +75,20 @@ void GpioWriteOutput()
 {
 	digitalWrite(PIN_GPIO_ROTOR_LED, g_gpio.RotorLed);
 	digitalWrite(PIN_GPIO_CONTROL_LED, g_gpio.ControlLed);
+
+	double posUp = (int) g_rototData[R_UP].CounterInDegree;
+	double posDown = (int) g_rototData[R_DOWN].CounterInDegree;
+	while( posUp < 0)
+	{
+		posUp += 360;
+	}
+	while( posDown < 0)
+	{
+		posDown += 360;
+	}
+	posUp = 256.0 * (((int)posUp % 360) / 360.0);
+	posDown = 256.0 * (((int)posDown % 360) / 360.0);
+
+	analogWrite( PIN_GPIO_ANALOG_POS0, (int)posUp);
+	analogWrite( PIN_GPIO_ANALOG_POS1, (int)posDown);
 }
