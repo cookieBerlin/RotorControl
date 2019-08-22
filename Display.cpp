@@ -12,18 +12,7 @@
 // Set the LCD address to 0x3F for a 16 chars and 2 line display
 LiquidCrystal_I2C lcd(0x3F, 20, 4);
 
-
-const int SymbolArrowUp = 0;
-uint8_t LcdCharArrowUp[8]  = {
-		0b00100,
-		0b01110,
-		0b10101,
-		0b00100,
-		0b00100,
-		0b00100,
-		0b00100};
-
-const int SymbolArrowDown = 1;
+const int SymbolArrowDown = 0;
 uint8_t LcdCharArrowDown[8]  = {
 		0b00100,
 		0b00100,
@@ -31,6 +20,16 @@ uint8_t LcdCharArrowDown[8]  = {
 		0b00100,
 		0b10101,
 		0b01110,
+		0b00100};
+
+const int SymbolArrowUp = 1;
+uint8_t LcdCharArrowUp[8]  = {
+		0b00100,
+		0b01110,
+		0b10101,
+		0b00100,
+		0b00100,
+		0b00100,
 		0b00100};
 
 const int SymbolDegree = 2;
