@@ -86,7 +86,7 @@
 
 
 // ID of the settings block
-#define CONFIG_VERSION "RC1"
+#define CONFIG_VERSION "RC2"
 
 // Tell it where to store your config data in EEPROM
 #define CONFIG_START 32
@@ -116,11 +116,8 @@ typedef struct tag_struct_EepromStore
 	bool					UseDhcp;
 	// hold Scaler for Encoder count -> Degree
 	double					EncoderCounterScaler[NumberOfRotors];
-
-	// hold Min counter of Rotors
-	double					RotorMinCounterInDegree[NumberOfRotors];
-	// hold Max counter of Rotors
-	double					RotorMaxCounterInDegree[NumberOfRotors];
+	// hold Offset for Encoder counter in Degree
+	double					EncoderCounterOffset[NumberOfRotors];
 } struct_EepromStore;
 
 typedef struct tag_struct_GpioData

@@ -110,10 +110,10 @@ void NetworkROTCRL::DecodeClientData(void)
 #endif
     sAnswer += "1\n"; // protocol Version
     sAnswer += "23\n"; // Unknown
-    sAnswer += "-180.0\n"; // Min_AZ
-    sAnswer += "+180.0\n"; // Max_AZ
+    sAnswer += "0.0\n"; // Min_AZ
+    sAnswer += "+360.0\n"; // Max_AZ
     sAnswer += "0.0\n"; // Min_EL
-    sAnswer += "90.0\n"; // Max_EL
+    sAnswer += "0.0\n"; // Max_EL
   }
   else if( readString.startsWith("_") ||
 		   readString.startsWith("get_info"))

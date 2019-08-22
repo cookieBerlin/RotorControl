@@ -68,7 +68,12 @@ void EncoderUpdate()
 
 		// read Data Counter Value
 		g_rototData[i].CounterInSteps = counter.Counter0_32Bit.Counter0;
-		g_rototData[i].CounterInDegree = g_rototData[i].CounterInSteps * g_eepromStore.EncoderCounterScaler[i];
+		g_rototData[i].CounterInDegree = (g_rototData[i].CounterInSteps * g_eepromStore.EncoderCounterScaler[i]) + g_eepromStore.EncoderCounterOffset[i];
+
+		while( g_rototData[i].CounterInDegree < 0)
+		{
+			g_rototData[i].CounterInDegree += 360;
+		}
 
 //		Serial.print( "Counter=");
 //		Serial.print( counter.Counter0_32Bit.Counter0, DEC);
