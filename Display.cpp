@@ -96,10 +96,19 @@ void DisplayShowStatusOfRotor(const int rotorId)
 	// show arrow
 	lcd.write(rotorId);
 
-	// show degree
-	lcd.print(" ");
-	lcd.print(g_rototData[rotorId].CounterInDegree, 1);
-	lcd.write(SymbolDegree);	// show Degree
+
+	// show Reference need warning
+	if(g_rototData[rotorId].CounterReferenced != Referenced)
+	{
+		lcd.print("!REF! ");
+	}
+	else
+	{
+		// show degree
+		lcd.print(" ");
+		lcd.print(g_rototData[rotorId].CounterInDegree, 1);
+		lcd.write(SymbolDegree);	// show Degree
+	}
 
 	// show counter
 	lcd.print("(");
@@ -108,12 +117,6 @@ void DisplayShowStatusOfRotor(const int rotorId)
 
 	// goto second line
 	lcd.setCursor(0, line+1);
-
-	// show Reference need warning
-	if(!g_rototData[rotorId].CounterReferenced)
-	{
-		lcd.print("!REF! ");
-	}
 
 	// show motor status
 	if( !g_rototData[rotorId].MotorActive)

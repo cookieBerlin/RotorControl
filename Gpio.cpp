@@ -55,18 +55,18 @@ void GpioReadInput()
 		}
 		else
 		{
-			if( g_gpio.ControlCcw)
-			{
-				g_rototData[R_DOWN].CounterReferenced = true;
-				g_rototData[R_DOWN].TargetPositionInDegree = NAN;
-				EncoderReset(R_DOWN);
-			}
-			if( g_gpio.ControlCw)
-			{
-				g_rototData[R_UP].CounterReferenced = true;
-				g_rototData[R_UP].TargetPositionInDegree = NAN;
-				EncoderReset(R_UP);
-			}
+//			if( g_gpio.ControlCcw)
+//			{
+//				g_rototData[R_DOWN].CounterReferenced = true;
+//				g_rototData[R_DOWN].TargetPositionInDegree = NAN;
+//				EncoderReset(R_DOWN);
+//			}
+//			if( g_gpio.ControlCw)
+//			{
+//				g_rototData[R_UP].CounterReferenced = true;
+//				g_rototData[R_UP].TargetPositionInDegree = NAN;
+//				EncoderReset(R_UP);
+//			}
 		}
 	}
 }

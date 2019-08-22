@@ -94,18 +94,27 @@
 // Number of Rotors, unly 2 are supported
 #define NumberOfRotors	2
 
+typedef enum tag_enum_ReferencStatus
+{
+	NotReferenced = 0,
+	StartReferenceRun,
+	ReferenceSearing,
+	StopReferenceRun,
+	Referenced
+} enum_ReferencStatus;
+
 // ----------------------------------------------------------------------------
 // -	Global type definitions
 // ----------------------------------------------------------------------------
 typedef struct tag_struct_RototData
 {
-	int32_t		CounterInSteps;
-	double		CounterInDegree;
-	bool		CounterReferenced;
-	bool		MotorActive;
-	bool		MotorTurningCcw;
-	double		TargetPositionInDegree;
-	int 		MotorCurrentInMa;
+	int32_t					CounterInSteps;
+	double					CounterInDegree;
+	tag_enum_ReferencStatus	CounterReferenced;
+	bool					MotorActive;
+	bool					MotorTurningCcw;
+	double					TargetPositionInDegree;
+	int 					MotorCurrentInMa;
 } struct_RototData;
 
 typedef struct tag_struct_EepromStore

@@ -15,6 +15,8 @@
 DualVNH5019MotorShield md( PIN_MD_INA1, PIN_MD_INB1, PIN_MD_PWM1, PIN_MD_EN1DIAG1, PIN_MD_CS1,
 						   PIN_MD_INA2, PIN_MD_INB2, PIN_MD_PWM2, PIN_MD_EN2DIAG2, PIN_MD_CS2);
 
+int32_t	CounterReferenceRun[NumberOfRotors];
+
 // ----------------------------------------------------------------------------
 // - 	SetupMotorControl
 // ----------------------------------------------------------------------------
@@ -34,6 +36,61 @@ void SetupMotorControl()
 	MotorControlUpdate();
 }
 
+void MotorControlUpdate_StartReferenceRun(int i)
+{
+	g_rototData[i].MotorActive = true;
+	g_rototData[i].MotorTurningCcw = true;
+
+	CounterReferenceRun[i] = g_rototData[i].CounterInSteps;
+
+	g_rototData[i].CounterReferenced = ReferenceSearing;
+}
+
+void MotorControlUpdate_ReferenceSearing(int i)
+{
+	int32_t diff = abs(CounterReferenceRun[i] - g_rototData[i].CounterInSteps);
+	Serial.print("\tDiff: ");
+	Serial.println(diff);
+
+	if( diff < 5 )
+	{
+		// found end switch (no moving)
+		g_rototData[i].CounterReferenced = StopReferenceRun;
+		g_rototData[i].MotorActive = false;
+	}
+
+	CounterReferenceRun[i] = g_rototData[i].CounterInSteps;
+}
+
+void MotorControlUpdate_StopReferenceRun(int i)
+{
+	EncoderReset(i);
+	g_rototData[i].CounterReferenced = Referenced;
+}
+
+void MotorControlUpdate_Referenced(int i)
+{
+	if( (g_rototData[i].TargetPositionInDegree == NAN))
+	{
+		g_rototData[i].MotorActive = false;
+	}
+	else
+	{
+		g_rototData[i].MotorActive = abs(g_rototData[i].TargetPositionInDegree - g_rototData[i].CounterInDegree) > 1.0;
+		g_rototData[i].MotorTurningCcw = g_rototData[i].TargetPositionInDegree < g_rototData[i].CounterInDegree;
+
+		double limit = (360 + g_eepromStore.EncoderCounterOffset[R_UP]);
+		if(g_rototData[i].TargetPositionInDegree < limit)
+		{
+			g_rototData[i].MotorTurningCcw = !g_rototData[i].MotorTurningCcw;
+		}
+		if(g_rototData[i].CounterInDegree < limit)
+		{
+			g_rototData[i].MotorTurningCcw = !g_rototData[i].MotorTurningCcw;
+		}
+	}
+}
+
 // ----------------------------------------------------------------------------
 // - 	MotorControlUpdate
 // ----------------------------------------------------------------------------
@@ -43,18 +100,21 @@ void MotorControlUpdate()
 	{
 		for(int i=0; i<NumberOfRotors ; i++)
 		{
-			if( (g_rototData[i].TargetPositionInDegree == NAN))
+			if( g_rototData[i].CounterReferenced == StartReferenceRun)
 			{
-				g_rototData[i].MotorActive = false;
-
-				Serial.print(" MotorActive: NAN");
+				MotorControlUpdate_StartReferenceRun(i);
 			}
-			else
+			else if( g_rototData[i].CounterReferenced == ReferenceSearing)
 			{
-				g_rototData[i].MotorActive = abs(g_rototData[i].TargetPositionInDegree - g_rototData[i].CounterInDegree) > 1.0;
-
-				// TODO user counter limits
-				g_rototData[i].MotorTurningCcw = g_rototData[i].TargetPositionInDegree < g_rototData[i].CounterInDegree;
+				MotorControlUpdate_ReferenceSearing(i);
+			}
+			else if( g_rototData[i].CounterReferenced == StopReferenceRun)
+			{
+				MotorControlUpdate_StopReferenceRun(i);
+			}
+			else if( g_rototData[i].CounterReferenced == Referenced)
+			{
+				MotorControlUpdate_Referenced(i);
 			}
 		}
 	}
